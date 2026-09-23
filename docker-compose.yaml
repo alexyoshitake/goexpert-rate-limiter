@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      context: .
+    environment:
+      PORT: ${PORT}
+      RATE_LIMIT_IP: ${RATE_LIMIT_IP}
+      RATE_LIMIT_TOKEN: ${RATE_LIMIT_TOKEN}
+      BLOCK_TIME: ${BLOCK_TIME}
+      REDIS_ADDR: ${REDIS_ADDR}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_DB: ${REDIS_DB}
+      REDIS_TEST_ADDR: redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    ports:
+      - "${PORT}:${PORT}"
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 10

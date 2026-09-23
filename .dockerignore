@@ -1,0 +1,9 @@
+.env
+.git
+.gitignore
+bin
+coverage.out
+coverage.html
+Dockerfile
+docker-compose.yaml
+*.log
